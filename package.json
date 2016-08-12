@@ -5,7 +5,8 @@
   "main": "dist",
   "scripts": {
     "dist" : "webpack",
-    "dist:min": "webpack"
+    "dist:min": "webpack",
+    "prepublish": "webpack"
   },
   "author": "James Singleton <jamespants@gmail.com> jamespants.com",
   "license": "ISC",
