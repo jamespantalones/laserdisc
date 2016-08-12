@@ -148,3 +148,17 @@ item.duration;
 item.currenTime;
 ```
 
+
+### Styling
+
+LASERDISC exposes several classes to use and style at will. By default, all videos will be responsive.
+
+```css
+
+.laser-outer-wrap
+	.laser-inner-wrap
+		.laser-poster-wrap
+		.laser-video
+
+```
+
