@@ -31,7 +31,7 @@ video/
 ## Example setup
 
 HTML
-```
+```html
 <div class="someclassname"
   data-source="data/your_video_with_no_file_extension"
   data-poster="data/yourposter.jpg"
@@ -41,7 +41,7 @@ HTML
 
 
 JS
-```
+```js
 //import module
 import LaserDisc from 'laserdisc';
 
@@ -63,7 +63,7 @@ for (let i = 0; i < lasers.length; i++ ){
 
 You can pass a lot of options and stuff to LaserDisc.
 
-```
+```js
 const options = {
   
   ratio: '16:9', //Screen size ratio. Options '16:9', '4:3'
@@ -119,7 +119,7 @@ const options = {
 
 There are also these.
 
-```
+```js
 const item = new LaserDisc(laser[i], options);
 
 item.play();
@@ -141,7 +141,7 @@ item.swap(newFile);
 
 ### Properties
 
-```
+```js
 item.duration;
 item.currenTime;
 ```
