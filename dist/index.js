@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -53,17 +63,18 @@
 
 	'use strict';
 
-	var _Laserdisc = __webpack_require__(2);
-
-	var _Laserdisc2 = _interopRequireDefault(_Laserdisc);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = _Laserdisc2.default; //--------------------------------------------
+	//--------------------------------------------
 	//
 	// Main export
 	//
 	//--------------------------------------------
+
+
+	var Laserdisc = __webpack_require__(2);
+
+	console.log(Laserdisc);
+
+	module.exports = Laserdisc;
 
 /***/ },
 /* 2 */
@@ -946,4 +957,6 @@
 	exports.default = Listeners;
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;

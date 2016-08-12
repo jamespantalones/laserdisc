@@ -2,7 +2,7 @@
   "name": "laserdisc",
   "version": "0.0.2-alpha1",
   "description": "Cool HTML5 Video wrapper with features like fullscreen stretch + crop",
-  "main": "dist",
+  "main": "dist/index.js",
   "scripts": {
     "dist": "webpack",
     "dist:min": "webpack",
