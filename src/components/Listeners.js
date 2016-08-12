@@ -6,7 +6,7 @@
 'use strict';
 
 
-const Listeners = {
+var Listeners = {
 
 	add: function(self){
 
@@ -60,4 +60,4 @@ const Listeners = {
 
 }
 
-export default Listeners;
+module.exports = Listeners;

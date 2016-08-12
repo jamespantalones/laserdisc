@@ -6,14 +6,12 @@
 'use strict';
 
 
-const Stretcher = (player, ratio, parent) => {
+var Stretcher = function(player, ratio, parent){
 
-	const poster = parent.getElementsByClassName('laser-poster-wrap')[0];
-
-	const container = parent || window;
-
-	let width = container.innerWidth;
-	let height = container.innerHeight;
+	var poster = parent.getElementsByClassName('laser-poster-wrap')[0];
+	var container = parent || window;
+	var width = container.innerWidth;
+	var height = container.innerHeight;
 
 	if (!width){
 		width = container.clientWidth;
@@ -23,10 +21,8 @@ const Stretcher = (player, ratio, parent) => {
 		height = container.clientHeight;
 	}
 
-	console.log(width, height);
-
-	let pWidth = container.innerWidth;
-	let pHeight = pWidth / ratio;
+	var pWidth = container.innerWidth;
+	var pHeight = pWidth / ratio;
 
 	// ------------------------------------------------
 	// Gap underneath
@@ -68,6 +64,7 @@ const Stretcher = (player, ratio, parent) => {
 		poster.style.top = (height - pHeight) / 2 + 'px';
 	}
 
-}
 
-export default Stretcher;
+};
+
+module.exports = Stretcher;

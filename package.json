@@ -2,20 +2,16 @@
   "name": "laserdisc",
   "version": "0.0.3-alpha1",
   "description": "Cool HTML5 Video wrapper with features like fullscreen stretch + crop",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "dist": "webpack",
-    "dist:min": "webpack",
-    "prepublish": "webpack"
+    "bundle": "browserify index.js -o index.dist.js",
+    "prepublish": "browserify index.js -o index.dist.js"
   },
   "author": "James Singleton <jamespants@gmail.com> jamespants.com",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.13.2",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "browserify": "^13.1.0",
+    "webpack": "^1.13.1"
   },
   "keywords": [
     "video",

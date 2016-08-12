@@ -1,116 +1,117 @@
 //--------------------------------------------
 //
+// Main export
+//
+//--------------------------------------------
+
+
+//--------------------------------------------
+//
 // Laserdisc
 //
 //--------------------------------------------
 		
 'use strict';
 
-import Stretcher from './Stretcher';
-import SetupDOM from './SetupDOM';
-import OverwriteDefaults from './OverwriteDefaults';
-import CheckRequirements from './Requirements';
-import FindClosest from './FindClosest';
-import Listeners from './Listeners';
+
+var Stretcher = require('./components/Stretcher');
+var SetupDOM = require('./components/SetupDOM');
+var OverwriteDefaults = require('./components/OverwriteDefaults');
+var CheckRequirements = require('./components/Requirements');
+var FindClosest = require('./components/FindClosest');
+var Listeners = require('./components/Listeners');
 
 
-//--------------------------------------------
-// Laserdisc class yo
-//
-		
-class Laserdisc {
+
+var LaserDisc = function(el, opts) {
 
 	//--------------------------------------------
-	// Constructor
+	// Element to replace with Laserdisc
 	//
+	this.el = el || null;
+
+
+	//--------------------------------------------
+	// Window sizing
+	//
+	this.winWidth = window.innerWidth;
+	this.winHeight = window.innerHeight;
 			
-	constructor(el, opts){
+	//--------------------------------------------
+	// Required Data
+	//
+	this.source = '';
+	this.poster = '';
+	
+	//--------------------------------------------
+	// Defaults
+	//
 
-		//--------------------------------------------
-		// Element to replace with Laserdisc
-		//
-		this.el = el || null;
+	this.sizes = [];
 
+	//stretch + crop to fill container at all times
+	this.stretch = false;
 
-		//--------------------------------------------
-		// Window sizing
-		//
-		this.winWidth = window.innerWidth;
-		this.winHeight = window.innerHeight;
-				
-		//--------------------------------------------
-		// Required Data
-		//
-		this.source = '';
-		this.poster = '';
-		
-		//--------------------------------------------
-		// Defaults
-		//
+	//default video screen ratio
+	this.ratio = 16 / 9;
 
-		this.sizes = [];
+	//loop
+	this.loop = true;
 
-		//stretch + crop to fill container at all times
-		this.stretch = false;
+	//show controls
+	this.controls = false;
 
-		//default video screen ratio
-		this.ratio = 16 / 9;
+	//play video automatically
+	this.autoplay = true;
 
-		//loop
-		this.loop = true;
+	//play video on click
+	this.clickToPlay = true;
 
-		//show controls
-		this.controls = false;
+	//play video on hover
+	this.hoverToPlay = false;
 
-		//play video automatically
-		this.autoplay = true;
+	//show play button
+	this.showPlayButton = true;
 
-		//play video on click
-		this.clickToPlay = true;
-
-		//play video on hover
-		this.hoverToPlay = false;
-
-		//show play button
-		this.showPlayButton = true;
-
-		//mute audio
-		this.mute = true;
+	//mute audio
+	this.mute = true;
 
 
-		//--------------------------------------------
-		// Stats
-		//
-		//(All times in ms)
-		this.duration = 0;
-		this.currentTime = 0;
-
-		
-
-		//--------------------------------------------
-		// Media states
-		//		
-		this.canplay = false;
-		this.canplaythrough = false;
-		this.playing = false;
-		this.hasPlayed = false;
-
-
-		//--------------------------------------------
-		// Overwrite defaults if options provided
-		//	
-		this.opts = opts || null;
-
-		this.init();
-	}
+	//--------------------------------------------
+	// Stats
+	//
+	//(All times in ms)
+	this.duration = 0;
+	this.currentTime = 0;
 
 	
 
+	//--------------------------------------------
+	// Media states
+	//		
+	this.canplay = false;
+	this.canplaythrough = false;
+	this.playing = false;
+	this.hasPlayed = false;
+
+
+	//--------------------------------------------
+	// Overwrite defaults if options provided
+	//	
+	this.opts = opts || null;
+
+	this.init();
+};
+
+
+
+LaserDisc.prototype = {
 
 	//--------------------------------------------
 	// Launch order
-	//	
-	init(){
+	//
+			
+	init: function(){
 
 		//make sure correct inputs are passed in
 		CheckRequirements(this);
@@ -131,24 +132,19 @@ class Laserdisc {
 		//add video source
 		this.addSourcesAndLoad();
 
-		
 		//--------------------------------------------
 		// If stretch option is on, instantiate the Stretcher
 		//
 		if (this.stretch){
 			Stretcher(this.video, this.ratio, this.outerWrap);
 		}
-				
-	}
-
-	
+	},
 
 
-	
 	//--------------------------------------------
 	// Bind 'this' to all events
 	//	
-	bindThis(){
+	bindThis: function(){
 		this.onResize = this.onResize.bind(this);
 		this.onCanPlay = this.onCanPlay.bind(this);
 		this.onCanPlayThrough = this.onCanPlayThrough.bind(this);
@@ -161,26 +157,24 @@ class Laserdisc {
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 		this.onClick = this.onClick.bind(this);
 		this.onLoad = this.onLoad.bind(this);
-	}
-
+	},
 
 
 	//--------------------------------------------
 	// Check sizing and add correct video
-	//	
-	addSourcesAndLoad(){
-
+	//
+	addSourcesAndLoad: function(){
 		// Pick closest size
-		const closest = FindClosest(this);
+		var closest = FindClosest(this);
 
 		//set appropriate sources
-		this.webmSource.src = `${this.source}_${closest}.webm`;
-		this.mp4Source.src = `${this.source}_${closest}.mp4`;
+
+		this.webmSource.src = this.source + '_' + closest + '.webm';
+		this.mp4Source.src = this.source + '_' + closest + '.mp4';
 				
 		//load video
 		this.video.load();
-	}
-
+	},
 
 
 
@@ -189,48 +183,45 @@ class Laserdisc {
 	// Methods
 	//
 	//--------------------------------------------
-			
-
 
 	//--------------------------------------------
 	// Trigger play
 	//	
-	play(){
+	play: function(){
 		this.video.play();
-	}
+	},
+
 
 	//--------------------------------------------
 	// Trigger pause
-	//	
-	pause(){
+	//
+	pause: function(){
 		this.video.pause();
-	}
+	},
+
 
 	//--------------------------------------------
 	// Trigger mute
-	//		
-	mute(){
-		this.video.muted = true;
-	}
-
+	//
+	mute: function(){
+		this.video.mute();
+	},
 
 	//--------------------------------------------
 	// Trigger sound
-	//		
-	unmute(){
-		this.video.muted = false;
-	}
+	//
+	unmute: function(){
+		this.video.unmute();
+	},
+
 
 	//--------------------------------------------
-	// Destroy all event listeners + container
+	// Destroy
 	//
-			
-	destroy(){
+	destroy: function(){
 		Listeners.remove(this);
 		this.outerWrap.remove();
-	}
-
-
+	},
 
 
 	//--------------------------------------------
@@ -238,75 +229,87 @@ class Laserdisc {
 	// Events
 	//
 	//--------------------------------------------
+	
 
 	//--------------------------------------------
 	// Called when duration is first available, or if video
 	// source changes
 	//
-			
-	onDurationChange(ev){
+	onDurationChange: function(ev){
 		this.duration = ev.timeStamp;
-	}
+	},
+
 
 	//--------------------------------------------
 	// When video has loaded enough frames to begin playing
 	//
 			
-	onCanPlay(){
+	onCanPlay: function(){
 		this.canplay = true;
 
 		if (this.onCanPlayCallback){
 			this.onCanPlayCallback();
 		}
-	}
+	},
+
 
 	//--------------------------------------------
 	// When video has loaded data, could be before
 	// ready to play
 	//
 			
-	onLoad(){
+	onLoad: function(ev){
 		this.loaded = true;
 
 		if (this.onLoadCallback){
-			this.onLoadCallback();
+			this.onLoadCallback(ev);
 		}
 
 		if (this.autoplay){
 			this.video.play();
 		}
-	}
+
+	},
+
 
 	//--------------------------------------------
 	// When video can fully play through
 	//
-	onCanPlayThrough(){
+	onCanPlayThrough: function(){
 		this.canplaythrough = true;
-	}
+	},
 
 
 	//--------------------------------------------
 	// Video is over
 	//		
-	onEnd(){
+	onEnd: function(ev){
 		if (this.video.loop){
 			this.video.play();
 		}
-	}
+
+		if (this.onEndCallback){
+			this.onEndCallback(ev);
+		}
+	},
 
 
 	//--------------------------------------------
 	// Error loading video
 	//	
-	onError(err){
+	onError: function(err){
 		console.warn('VIDEO ERROR', err);
-	}
+
+		if (this.onErrorCallback){
+			this.onErrorCallback(err);
+		}
+	},
 
 
 	//--------------------------------------------
 	// Video is playing
 	//		
-	onPlay(ev){
+	onPlay: function(ev){
 		this.playing = true;
 		
 		if (!this.hasPlayed){
@@ -315,48 +318,52 @@ class Laserdisc {
 		}
 
 		if (this.onPlayCallback){
-			this.onPlayCallback();
+			this.onPlayCallback(ev);
 		}
-	}
+	},
+
 
 	//--------------------------------------------
 	// Vidoe is paused
 	//	
-	onPause(ev){
+	onPause: function(ev){
 		this.playing = false;
 
 		if (this.onPauseCallback){
-			this.onPauseCallback();
+			this.onPauseCallback(ev);
 		}
-	}
+	},
+
 
 	//--------------------------------------------
-	// Current playback time
-	//		
-	onTimeUpdate(ev){
+	// Current playback position
+	//
+	onTimeUpdate: function(ev){
 		this.currentTime = ev.timeStamp;
-	}
 
+		if (this.onTimeUpdateCallback){
+			this.onTimeUpdateCallback(this.currentTime);
+		}
+	},
 
 
 	//--------------------------------------------
 	// Click on video
 	//
-	onClick(ev){
+	onClick: function(ev){
 		if (this.playing){
 			this.pause();
 		}
 		else{
 			this.play();
 		}
-	}
+	},
 
-	
 
 	//--------------------------------------------
 	// Mouse exit
 	//	
-	onMouseLeave(){
+	onMouseLeave: function(ev){
 		if (this.playing){
 			this.pause();
 		}
@@ -364,13 +371,14 @@ class Laserdisc {
 		else{
 			return null;
 		}
-	}
+	},
 
-	
+
+
 	//--------------------------------------------
 	// Mouse enter
 	//		
-	onMouseEnter(){
+	onMouseEnter: function(ev){
 		if (!this.playing){
 			this.play();
 		}
@@ -378,14 +386,13 @@ class Laserdisc {
 		else{
 			return null;
 		}
-	}
+	},
 
-	
 
 	//--------------------------------------------
 	// Window/container resize
 	//		
-	onResize(){
+	onResize: function(ev){
 
 		this.winWidth = window.innerWidth;
 		this.winHeight = window.innerHeight;
@@ -399,7 +406,5 @@ class Laserdisc {
 
 
 
-//--------------------------------------------
-// Export module
-//
-export default Laserdisc;
+
+module.exports = LaserDisc;

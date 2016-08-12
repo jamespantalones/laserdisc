@@ -5,7 +5,7 @@
 //--------------------------------------------
 
 
-const Requirements = (self) => {
+var Requirements = function(self){
 
 	if (!self.el) {
 		console.warn('No element passed to Laserdisc constructor');
@@ -33,7 +33,6 @@ const Requirements = (self) => {
 	else if (self.clickToPlay){
 		self.hoverToPlay = false;
 	}
-
 }
 
-export default Requirements;
+module.exports = Requirements;

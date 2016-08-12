@@ -6,18 +6,17 @@
 'use strict';
 
 
-const SetupDOM = (self) => {
+var SetupDOM = function(self){
 
 	//Create elements needed to be reused throughout
 	self.outerWrap = document.createElement('div');
 	self.posterWrap = document.createElement('div');
-	
 
 	//other els
-	const innerWrap = document.createElement('div');
-	const video = document.createElement('video');
-	const mp4Source = document.createElement('source');
-	const webmSource = document.createElement('source');
+	var innerWrap = document.createElement('div');
+	var video = document.createElement('video');
+	var mp4Source = document.createElement('source');
+	var webmSource = document.createElement('source');
 
 	//add media types
 	mp4Source.setAttribute('type', 'video/mp4');
@@ -25,13 +24,11 @@ const SetupDOM = (self) => {
 	webmSource.setAttribute('type', 'video/webm');
 	webmSource.setAttribute('src', '');
 
-
 	//Add needed classes
 	self.outerWrap.classList.add('laser-outer-wrap');
 	self.posterWrap.classList.add('laser-poster-wrap');
 	innerWrap.classList.add('laser-inner-wrap');
 	video.classList.add('laser-video');
-	
 
 	if (self.showPlayButton){
 		self.posterWrap.classList.add('show-button');
@@ -45,12 +42,11 @@ const SetupDOM = (self) => {
 		innerWrap.style.paddingBottom = '75%';
 	}
 
-	self.posterWrap.style.background = `url(${self.poster})`;
+	self.posterWrap.style.background = 'url(' + self.poster + ')';
 	self.posterWrap.style.backgroundRepeat = 'no-repeat';
 	self.posterWrap.style.backgroundPosition = 'center center';
 	self.posterWrap.style.backgroundSize = 'cover';
 	self.posterWrap.style.pointerEvents = 'none';
-
 
 	//--------------------------------------------
 	// Set webkit inline play
@@ -89,8 +85,9 @@ const SetupDOM = (self) => {
 		self.video.setAttribute('loop', '');
 	}
 
-}
 
+};
 
-export default SetupDOM;
+module.exports = SetupDOM;
+
 

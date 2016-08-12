@@ -5,17 +5,16 @@
 //
 //--------------------------------------------
 
+var FindClosest = function(self){
 
-const FindClosest = (self) => {
-
-	let i = 0;
-	let minDiff = self.winWidth;
-	let arr = self.sizes;
-	let num = self.winWidth;
-	let ans;
+	var i = 0;
+	var minDiff = self.winWidth;
+	var num = self.winWidth;
+	var arr = self.sizes;
+	var ans;
 
 	for (i in arr){
-		let m = Math.abs(num - arr[i]);
+		var m = Math.abs(num - arr[i]);
 
 		if (m < minDiff){
 			minDiff = m;
@@ -24,7 +23,7 @@ const FindClosest = (self) => {
 	}
 
 	return ans;
+};
 
-}
 
-export default FindClosest;
+module.exports = FindClosest;

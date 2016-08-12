@@ -6,8 +6,8 @@
 'use strict';
 
 
-const OverwriteDefaults = (self) => {
 
+var OverwriteDefaults = function(self){
 
 	self.fullScreen = self.opts.fullScreen || false;
 	self.controls = self.opts.controls || false;
@@ -21,12 +21,11 @@ const OverwriteDefaults = (self) => {
 	if (self.opts.sizes){
 
 		//Make sure we have number and not string
-		for (let i = 0; i < self.opts.sizes.length; i++ ){
-			const num = parseInt(self.opts.sizes[i], 10);
+		for (var i = 0; i < self.opts.sizes.length; i++ ){
+			var num = parseInt(self.opts.sizes[i], 10);
 			self.sizes.push(num);
 		}
 	}
-
 
 	//--------------------------------------------
 	// Check for loop
@@ -62,8 +61,6 @@ const OverwriteDefaults = (self) => {
 	if (self.opts.controls !== null && self.opts.controls !== 'undefined'){
 		self.controls = self.opts.controls;
 	}
-			
-
 
 	//--------------------------------------------
 	// Setup optional callbacks
@@ -78,6 +75,18 @@ const OverwriteDefaults = (self) => {
 
 	if (typeof self.opts.onLoad === 'function'){
 		self.onLoadCallback = self.opts.onLoad;
+	}
+
+	if (typeof self.opts.onError === 'function'){
+		self.onErrorCallback = self.opts.onError;
+	}
+
+	if (typeof self.opts.onEnd === 'function'){
+		self.onEndCallback = self.opts.onEnd;
+	}
+
+	if (typeof self.opts.onTimeUpdate === 'function'){
+		self.onTimeUpdateCallback = self.opts.onTimeUpdate;
 	}
 
 	//--------------------------------------------
@@ -98,7 +107,8 @@ const OverwriteDefaults = (self) => {
 		}
 	}
 
-}
+};
 
 
-export default OverwriteDefaults;
+module.exports = OverwriteDefaults;
+
