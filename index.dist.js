@@ -226,6 +226,24 @@ LaserDisc.prototype = {
 
 
 	//--------------------------------------------
+	// Swap
+	//
+	swap: function(file){
+		this.source = file;
+		this.addSourcesAndLoad();
+	},
+
+
+	//--------------------------------------------
+	// Manual loading
+	//
+	load: function(){
+		this.video.load();
+	},
+			
+
+
+	//--------------------------------------------
 	//
 	// Events
 	//
@@ -406,10 +424,7 @@ LaserDisc.prototype = {
 }
 
 
-// console.log(LaserDisc);
-
-
-// module.exports = LaserDisc;
+module.exports = LaserDisc;
 
 },{"./src/components/FindClosest":2,"./src/components/Listeners":3,"./src/components/OverwriteDefaults":4,"./src/components/Requirements":5,"./src/components/SetupDOM":6,"./src/components/Stretcher":7}],2:[function(require,module,exports){
 //--------------------------------------------
