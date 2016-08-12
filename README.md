@@ -9,7 +9,9 @@ because that's where all the cool stuff on the web is happening. If you want a r
 a bunch of stuff, but LASERDISC does a bunch of stuff too.
 
 ### Setting up a LASERDISC sesh
-- `npm install --save laserdisc`
+```
+npm install --save laserdisc
+```
 
 
 ### Video Formats
