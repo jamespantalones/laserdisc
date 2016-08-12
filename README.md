@@ -1,7 +1,7 @@
 # LASERDISC
 ## HTML5 Video Wrapper
 
-WARNING: ALPHA RELEASE
+WARNING: ALPHA RELEASE. MOST OF THE FEATURES BELOW WORK, BUT SOME ARE STILL UNDER CONSTRUCTION.
 
 This is going to be the greatest video player of all time. At least, that is the plan. However, it is only ever going to be in the semi-professional arena
 because that's where all the cool stuff on the web is happening. If you want a really professional thing, use [video.js](http://videojs.com/). It does 
@@ -60,17 +60,89 @@ for (let i = 0; i < lasers.length; i++ ){
 
 ### Options
 
-You can pass a lot of stuff to LaserDisc.
+You can pass a lot of options and stuff to LaserDisc.
 
 ```
 const options = {
   
   ratio: '16:9', //Screen size ratio. Options '16:9', '4:3'
   
-  sizes: [280,640,960,1280,1920]
+  sizes: [280,640,960,1280,1920], //widths of video files
   
+  loop: true, //default true
   
+  controls: false, //default false
+  
+  mute: true, //default true
+  
+  autoplay: false, //default false
+  
+  clickToPlay: false, //default false. video will toggle play/pause on clicks
+  
+  hoverToPlay: false, //default false. video will toggle play/pause on mouseenter, mouseleave
+  
+  showPlayButton: false, //default false. Will display PNG over video until played
+  
+  //CALLBACKS
+  
+  //called when video has begun loading
+  onload: function(ev){
+  },
+  
+  //video has loaded enough frames to begin playing
+  onCanPlay: function(ev){
+  },
+  
+  //video is playing
+  onPlay: function(ev){
+  },
+  
+  //video is paused
+  onPause: function(ev){
+  },
+  
+  //end is over
+  onEnd: function(ev){
+  },
+  
+  //onError
+  onError: function(err){
+  },
+  
+  onTimeUpdate: function(ev){
+  }
 };
+```
+
+### Methods
+
+There are also these.
+
+```
+const item = new LaserDisc(laser[i], options);
+
+item.play();
+item.pause();
+item.mute();
+item.unmute();
+
+//Remove all event listeners and remove container
+item.destroy();
+
+//Manual load. You probably won't need this much.
+item.load();
+
+//Pass in new video and reload
+item.swap(newFile);
+
+```
+
+
+### Properties
+
+```
+item.duration;
+item.currenTime;
 ```
 
 
