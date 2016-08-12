@@ -10,7 +10,6 @@ module.exports = {
 	output: {
 		path: './dist',
 		filename: 'index.js',
-		libraryTarget: 'umd'
 		// library: 'LaserDisc'
 	},
 
