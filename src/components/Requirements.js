@@ -28,10 +28,12 @@ var Requirements = function(self){
 	//
 	if (self.hoverToPlay){
 		self.clickToPlay = false;
+		self.autoplay = false;
 	}
 
 	else if (self.clickToPlay){
 		self.hoverToPlay = false;
+		self.autoplay = false;
 	}
 }
 

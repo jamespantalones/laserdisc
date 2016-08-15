@@ -165,10 +165,8 @@ item.mute();
 
 item.unmute();
 
-//EXPERIMENTAL. DO NOT USE YET!
-item.reverse();
-
-
+//float between 0.0 (muted) and 1.0 (full volume)
+item.volume(level);
 
 //jump to point
 item.seekTo(timeInSeconds);
@@ -179,8 +177,12 @@ item.destroy();
 //Manual load. You probably won't need this much.
 item.load();
 
-//Pass in new video and reload
-item.swap(newFile);
+//Pass in new video and reload. Optional (recommended) array of sizes.
+// Make sure to follow naming convention.
+item.swap(newFile, [640, 960, 1280, 1920]);
+
+//set volume (between 0.0 and 1.0);
+item.setVolume(newVolumeFloat);
 
 ```
 
@@ -195,8 +197,9 @@ item.duration;
 // currentime directly on video
 item.currentTime;
 
-//set interval to reverse frames
-item.reverseInterval;
+//retrieve current volume
+item.volume;
+
 ```
 
 

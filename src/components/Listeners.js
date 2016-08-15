@@ -52,6 +52,10 @@ var Listeners = {
 			self.video.removeEventListener('mouseenter', self.onMouseEnter, false);
 			self.video.removeEventListener('mouseleave', self.onMouseLeave, false);
 		}
+
+		if (self.reverseIntervalLoop){
+			clearTimeout(self.reverseIntervalLoop);
+		}
 		
 	}
 

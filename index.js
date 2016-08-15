@@ -3,7 +3,7 @@
 // Main export
 //
 //--------------------------------------------
-
+var q = require('q');
 
 //--------------------------------------------
 //
@@ -77,6 +77,10 @@ var LaserDisc = function(el, opts) {
 	this.mute = true;
 
 
+	//default volume
+	this.volume = 1.0;
+
+
 	//--------------------------------------------
 	// Stats
 	//
@@ -94,6 +98,7 @@ var LaserDisc = function(el, opts) {
 	//		
 	this.canplay = false;
 	this.canplaythrough = false;
+	this.loadedMetaData = false;
 	this.playing = false;
 	this.hasPlayed = false;
 
@@ -165,28 +170,87 @@ LaserDisc.prototype = {
 
 
 	//--------------------------------------------
+	// See if video exists
+	//
+			
+	doesVideoExist: function(url){
+		var deferred = q.defer();
+		var request = new XMLHttpRequest();
+
+		
+		request.open('GET', url, true);
+
+		request.onload = function(){
+			deferred.resolve(request.status);
+		}
+
+		request.onerror = function(err){
+			deferred.reject(err);
+		}
+
+		
+		request.send();
+
+		return deferred.promise;
+
+	},
+
+
+	//--------------------------------------------
 	// Check sizing and add correct video
 	//
 	addSourcesAndLoad: function(){
+		var self = this;
+		var mp4Source = '';
+		var webmSource = '';
 
-		if (this.sizes.length > 0){
+
+		if (!this.sizes || this.sizes.length > 0){
 			// Pick closest size
 			var closest = FindClosest(this);
 
-			//set appropriate sources
+			//see if file exists + set appropriate sources
 
-			this.webmSource.src = this.source + '_' + closest + '.webm';
-			this.mp4Source.src = this.source + '_' + closest + '.mp4';
-				
-			//load video
-			this.video.load();
+			webmSource = this.source + '_' + closest + '.webm';
+			mp4Source = this.source + '_' + closest + '.mp4';
 		}
 
-		else{
-			this.webmSource.src = this.source + '.webm';
-			this.mp4Source.src = this.source + '.mp4';
+		else {
+
+			webmSource = this.source + '.webm';
+			mp4Source = this.source + '.mp4';
+
 		}
+
+
+		this.doesVideoExist(webmSource).then(function(firstResponse){
+			
+			if (firstResponse === 404){
+				console.log('Cannot find WEBM source ', webmSource);
+				return null;
+			}
+
+
+
+			self.doesVideoExist(mp4Source).then(function(secondResponse){
+
+				if (secondResponse === 404){
+					console.log('Cannot find MP4 source ', webmSource);
+					return null;
+				}
+
+				self.webmSource.src = webmSource;
+				self.mp4Source.src = mp4Source;
+				self.video.load();
+
+			}, function(err){
+				console.log('Error loading MP4 ', mp4Source);
+			});
 		
+		}, function(err){
+			console.log('Error loading WEBM', webmSource);
+		});
+
 	},
 
 
@@ -252,8 +316,12 @@ LaserDisc.prototype = {
 	//--------------------------------------------
 	// Swap
 	//
-	swap: function(file){
+	swap: function(file, sizes){
 		this.source = file;
+
+		if (sizes){
+			this.sizes = sizes;
+		}
 		this.addSourcesAndLoad();
 	},
 
@@ -269,47 +337,34 @@ LaserDisc.prototype = {
 	// Seek To
 	//
 	seekTo: function(time){
-		console.log(this);
-		this.video.currentTime = time;
-		this.currentTime = this.video.currentTime;
-	},
-
-	reverse: function(time){
 		var self = this;
-		if (!time){
-			console.warn('Starting point in seconds to reverse from must be specified');
-			return null;
-		}
-
-
-		this.video.currentTime = time;
-		this.currentTime = this.video.currentTime;
-		
-			this.video.play().then(function(){
-				self.video.pause();
-			});
-			
-
-		function reverseFrame(){
-
-			if (self.video.currentTime <= 0){
-				clearTimeout(self.reverseIntervalLoop);
-			}
-
-			else{
-				self.video.currentTime = self.video.currentTime - 0.01;
-				self.currentTime = self.video.currentTime;
-				self.reverseIntervalLoop = setTimeout(reverseFrame, self.reverseInterval);
-
-			}
-			
-
-		}
-
-		reverseFrame();
-
+		setTimeout(function(){
+			self.video.currentTime = time;
+			//self.currentTime = self.video.currentTime;
+		});
 		
 	},
+
+	//--------------------------------------------
+	// Set volume
+	//
+	setVolume: function(volume){
+		
+
+		this.volume = volume;
+
+		if (this.volume < 0){
+			this.volume = 0.0;
+		}
+
+		if (this.volume > 1){
+			this.volume = 1.0;
+		}
+
+		this.video.volume = this.volume;
+
+	},
+			
 			
 			
 
@@ -367,6 +422,8 @@ LaserDisc.prototype = {
 
 	onLoadedMetaData: function(ev){
 		
+		this.loadedMetaData = true;
+
 		if (this.onLoadedMetaDataCallback){
 			this.onLoadedMetaDataCallback(ev);
 		}
@@ -378,6 +435,10 @@ LaserDisc.prototype = {
 	//
 	onCanPlayThrough: function(){
 		this.canplaythrough = true;
+
+		if (this.onCanPlayThroughCallback){
+			this.onCanPlayThroughCallback();
+		}
 	},
 
 

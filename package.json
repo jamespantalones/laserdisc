@@ -23,5 +23,8 @@
   "keywords": [
     "video",
     "html5 video"
-  ]
+  ],
+  "dependencies": {
+    "q": "^1.4.1"
+  }
 }
