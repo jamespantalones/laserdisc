@@ -14,6 +14,21 @@ a bunch of stuff. However, LASERDISC does a bunch of stuff too, including many f
 npm install --save laserdisc
 ```
 
+Grab the CSS file and dump into your HEAD:
+
+```
+https://s3.amazonaws.com/laserdisc-assets/laserdisc.css
+
+//minified
+https://s3.amazonaws.com/laserdisc-assets/laserdisc.min.css
+```
+
+Or via CDN:
+```
+http://dc6emjnxox7vk.cloudfront.net/laserdisc.min.css
+```
+
+
 
 ### Video Formats
 WEBM and MP4 must be included. Furthermore, names must indicate video width using the following convention: 'video/my_video_960.mp4'
