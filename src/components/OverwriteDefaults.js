@@ -26,6 +26,7 @@ var OverwriteDefaults = function(self){
 			self.sizes.push(num);
 		}
 	}
+			
 
 	//--------------------------------------------
 	// Check for loop

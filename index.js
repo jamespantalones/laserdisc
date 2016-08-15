@@ -164,16 +164,25 @@ LaserDisc.prototype = {
 	// Check sizing and add correct video
 	//
 	addSourcesAndLoad: function(){
-		// Pick closest size
-		var closest = FindClosest(this);
 
-		//set appropriate sources
+		if (this.sizes.length > 0){
+			// Pick closest size
+			var closest = FindClosest(this);
 
-		this.webmSource.src = this.source + '_' + closest + '.webm';
-		this.mp4Source.src = this.source + '_' + closest + '.mp4';
+			//set appropriate sources
+
+			this.webmSource.src = this.source + '_' + closest + '.webm';
+			this.mp4Source.src = this.source + '_' + closest + '.mp4';
 				
-		//load video
-		this.video.load();
+			//load video
+			this.video.load();
+		}
+
+		else{
+			this.webmSource.src = this.source + '.webm';
+			this.mp4Source.src = this.source + '.mp4';
+		}
+		
 	},
 
 
