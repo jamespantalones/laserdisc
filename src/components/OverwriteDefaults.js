@@ -90,6 +90,18 @@ var OverwriteDefaults = function(self){
 		self.onTimeUpdateCallback = self.opts.onTimeUpdate;
 	}
 
+	if (typeof self.opts.onClick === 'function'){
+		self.onClickCallback = self.opts.onClick;
+	}
+
+	if (typeof self.opts.onDurationChange === 'function'){
+		self.onDurationChangeCallback = self.opts.onDurationChange;
+	}
+
+	if (typeof self.opts.onLoadedMetaData === 'function'){
+		self.onLoadedMetaDataCallback = self.opts.onLoadedMetaData;
+	}
+
 	//--------------------------------------------
 	// Check ratio overrides
 	//

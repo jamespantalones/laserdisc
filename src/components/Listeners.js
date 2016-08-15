@@ -20,16 +20,15 @@ var Listeners = {
 		self.video.addEventListener('pause', self.onPause, false);
 		self.video.addEventListener('timeupdate', self.onTimeUpdate, false);
 		self.video.addEventListener('loadeddata', self.onLoad, false);
-
+		self.video.addEventListener('loadedmetadata', self.onLoadedMetaData, false);
+		self.video.addEventListener('click', self.onClick, false);
 
 		if (self.hoverToPlay){
 			self.video.addEventListener('mouseenter', self.onMouseEnter, false);
 			self.video.addEventListener('mouseleave', self.onMouseLeave, false);
 		}
 
-		if (self.clickToPlay){
-			self.video.addEventListener('click', self.onClick, false);
-		}
+			
 
 	},
 
@@ -46,16 +45,14 @@ var Listeners = {
 		self.video.removeEventListener('pause', self.onPause, false);
 		self.video.removeEventListener('timeupdate', self.onTimeUpdate, false);
 		self.video.removeEventListener('loadeddata', self.onLoad, false);
-
+		self.video.removeEventListener('loadedmetadata', self.onLoadedMetaData, false);
+		self.video.removeEventListener('click', self.onClick, false);
+		
 		if (self.hoverToPlay){
 			self.video.removeEventListener('mouseenter', self.onMouseEnter, false);
 			self.video.removeEventListener('mouseleave', self.onMouseLeave, false);
 		}
 		
-
-		if (self.clickToPlay){
-			self.video.removeEventListener('click', self.onClick, false);
-		}
 	}
 
 }

@@ -1,12 +1,13 @@
+![laserdisc logo](https://github.com/edweena/laserdisc/__laserdisc.gif)
 
 # LASERDISC
 ## HTML5 Video Wrapper
 
 WARNING: ALPHA RELEASE. MOST OF THE FEATURES BELOW WORK, BUT SOME ARE STILL UNDER CONSTRUCTION.
 
-This is going to be the greatest video player of all time. At least, that is the plan. However, it is only ever going to be in the semi-professional arena
-because that's where all the cool stuff on the web is happening. If you want a really professional thing, use [video.js](http://videojs.com/). It does 
-a bunch of stuff, but LASERDISC does a bunch of stuff too.
+This is going to be the greatest video player of all time. At least, that is the plan. With that being said, it is only ever going to be in the semi-professional arena
+because that's where all the cool stuff on the web is happening. If you want a really professional, conservative thing, use [video.js](http://videojs.com/), which does 
+a bunch of stuff. However, LASERDISC does a bunch of stuff too, including many features video.js does not, making it the cooler pick.
 
 ### Setting up a LASERDISC sesh
 ```
@@ -68,23 +69,35 @@ You can pass a lot of options and stuff to LaserDisc.
 ```js
 const options = {
   
-  ratio: '16:9', //Screen size ratio. Options '16:9', '4:3'
+  //Screen size ratio. Options '16:9', '4:3'
+  ratio: '16:9',
   
-  sizes: [280,640,960,1280,1920], //widths of video files
+  //widths of video files. If no sizes
+  // are specified, then only data-source will be used.
+  // Again, please make not of the naming convention
+  // that is required for videos. Do not append file extensions
+  sizes: [280,640,960,1280,1920],
   
-  loop: true, //default true
+  //default true
+  loop: true,
   
-  controls: false, //default false
+  //default false
+  controls: false,
   
-  mute: true, //default true
+  //default true
+  mute: true,
   
-  autoplay: false, //default false
+  //default false
+  autoplay: false,
   
-  clickToPlay: false, //default false. video will toggle play/pause on clicks
+  //default false. video will toggle play/pause on clicks
+  clickToPlay: false,
   
-  hoverToPlay: false, //default false. video will toggle play/pause on mouseenter, mouseleave
+  //default false. video will toggle play/pause on mouseenter, mouseleave
+  hoverToPlay: false,
   
-  showPlayButton: false, //default false. Will display PNG over video until played
+  //default false. Will display PNG over video until played
+  showPlayButton: false,
   
   //CALLBACKS
   
@@ -112,7 +125,25 @@ const options = {
   onError: function(err){
   },
   
+  //called on default browser schedule when video progress
+  // is made
   onTimeUpdate: function(ev){
+  },
+
+  //Can be used if you want to handle clicks
+  // manually. This callback will fire (if specified/passed in like below)
+  // regardless of whether clickToPlay options is set to true
+  // or not.
+  onClick: function(ev){
+
+  },
+
+
+  //Called when duration of video updates.
+  // This happens either when video is loaded
+  // and duration data exists
+  onDurationChange: function(ev){
+
   }
 };
 ```
@@ -124,10 +155,23 @@ There are also these.
 ```js
 const item = new LaserDisc(laser[i], options);
 
+//play function. Can optionally pass in time in seconds to
+// begin at that moment
 item.play();
+
 item.pause();
+
 item.mute();
+
 item.unmute();
+
+//experimental
+item.reverse();
+
+
+
+//jump to point
+item.seekTo(timeInSeconds);
 
 //Remove all event listeners and remove container
 item.destroy();
@@ -145,7 +189,14 @@ item.swap(newFile);
 
 ```js
 item.duration;
-item.currenTime;
+
+//retrieve current time of video (in seconds)
+// note: this is not the same as setting 
+// currentime directly on video
+item.currentTime;
+
+//set interval to reverse frames
+item.reverseInterval;
 ```
 
 
@@ -161,4 +212,7 @@ LASERDISC exposes several classes to use and style at will. By default, all vide
 		.laser-video
 
 ```
+
+
+*Cool logo by Stephanie Davidson*
 
