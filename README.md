@@ -104,6 +104,12 @@ const options = {
   //called when video has begun loading
   onload: function(ev){
   },
+
+  //called when video info is in. Before any seek events, make sure 
+  // this has been hit
+  onLoadedMetaData: function(){
+
+  },
   
   //video has loaded enough frames to begin playing
   onCanPlay: function(ev){
