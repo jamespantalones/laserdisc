@@ -3,7 +3,7 @@
 # LASERDISC
 ## HTML5 Video Wrapper
 
-WARNING: ALPHA RELEASE. MOST OF THE FEATURES BELOW WORK, BUT SOME ARE STILL UNDER CONSTRUCTION.
+WARNING: ALPHA RELEASE IN ACTIVE DEVELOPMENT. MOST OF THE FEATURES BELOW WORK, BUT SOME ARE STILL UNDER CONSTRUCTION. USE AT YOUR OWN RISK. BREAKING CHANGES WILL OCCUR UNTIL BETA RELEASE – WHICH WILL BE SOON
 
 This is going to be the greatest video player of all time. At least, that is the plan. With that being said, it is only ever going to be in the semi-professional arena
 because that's where all the cool stuff on the web is happening. If you want a really professional, conservative thing, use [video.js](http://videojs.com/), which does 
@@ -165,7 +165,7 @@ item.mute();
 
 item.unmute();
 
-//experimental
+//EXPERIMENTAL. DO NOT USE YET!
 item.reverse();
 
 
