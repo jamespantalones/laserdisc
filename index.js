@@ -4,6 +4,7 @@
 //
 //--------------------------------------------
 var q = require('q');
+var FullScreen = require('laserdisc-fullscreen');
 
 //--------------------------------------------
 //
@@ -14,7 +15,6 @@ var q = require('q');
 'use strict';
 
 
-var Stretcher = require('./src/components/Stretcher');
 var SetupDOM = require('./src/components/SetupDOM');
 var OverwriteDefaults = require('./src/components/OverwriteDefaults');
 var CheckRequirements = require('./src/components/Requirements');
@@ -144,7 +144,7 @@ LaserDisc.prototype = {
 		// If stretch option is on, instantiate the Stretcher
 		//
 		if (this.stretch){
-			Stretcher(this.video, this.ratio, this.outerWrap);
+			FullScreen(this.video);
 		}
 	},
 
@@ -575,7 +575,7 @@ LaserDisc.prototype = {
 
 
 		if (this.stretch){
-			Stretcher(this.video, this.ratio, this.outerWrap);
+			FullScreen(this.video);
 		}
 	}
 }

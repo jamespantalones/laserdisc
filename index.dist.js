@@ -5,6 +5,7 @@
 //
 //--------------------------------------------
 var q = require('q');
+var FullScreen = require('laserdisc-fullscreen');
 
 //--------------------------------------------
 //
@@ -15,7 +16,6 @@ var q = require('q');
 'use strict';
 
 
-var Stretcher = require('./src/components/Stretcher');
 var SetupDOM = require('./src/components/SetupDOM');
 var OverwriteDefaults = require('./src/components/OverwriteDefaults');
 var CheckRequirements = require('./src/components/Requirements');
@@ -145,7 +145,7 @@ LaserDisc.prototype = {
 		// If stretch option is on, instantiate the Stretcher
 		//
 		if (this.stretch){
-			Stretcher(this.video, this.ratio, this.outerWrap);
+			FullScreen(this.video);
 		}
 	},
 
@@ -576,7 +576,7 @@ LaserDisc.prototype = {
 
 
 		if (this.stretch){
-			Stretcher(this.video, this.ratio, this.outerWrap);
+			FullScreen(this.video);
 		}
 	}
 }
@@ -584,7 +584,83 @@ LaserDisc.prototype = {
 
 module.exports = LaserDisc;
 
-},{"./src/components/FindClosest":4,"./src/components/Listeners":5,"./src/components/OverwriteDefaults":6,"./src/components/Requirements":7,"./src/components/SetupDOM":8,"./src/components/Stretcher":9,"q":3}],2:[function(require,module,exports){
+},{"./src/components/FindClosest":5,"./src/components/Listeners":6,"./src/components/OverwriteDefaults":7,"./src/components/Requirements":8,"./src/components/SetupDOM":9,"laserdisc-fullscreen":2,"q":4}],2:[function(require,module,exports){
+//--------------------------------------------
+//
+// Laserdisc Fullscreen
+//
+//--------------------------------------------
+
+
+module.exports = function(player, parent, targetRatio){
+
+
+	//make sure player exists
+	if (!player){
+		console.log('%c No player element provided', 'background: rgba(255,0,0,1); color: rgba(255,0,255,1);');
+		return null;
+	}
+	//use container if provided. otherwise, use window
+	var container = parent || window;
+
+	//ratio settings
+	var ratio = targetRatio || 16 / 9;
+
+
+	//--------------------------------------------
+	// Set width + height
+	//
+
+	var width = container.innerWidth;
+	var height = container.innerHeight;
+
+	if (!width || width === 0){
+		width = container.clientWidth;
+	}
+
+	if (!height || height === 0){
+		width = container.clientHeight;
+	}
+
+
+	var pWidth = width;
+	var pHeight = pWidth / ratio;
+
+	
+
+	//--------------------------------------------
+	// Gap underneath
+	//
+	if (width / ratio < height){
+		pWidth = Math.ceil(height * ratio);
+
+		player.style.position = 'absolute';
+		player.style.width = pWidth + 'px';
+		player.style.height = height + 'px';
+		player.style.top = 0;
+		player.style.left = (width - pWidth) / 2 + 'px';
+	}
+
+	
+
+	//--------------------------------------------
+	// Gap on side
+	//
+	else {
+		pHeight = Math.ceil(width / ratio);
+
+		player.style.position = 'absolute';
+		player.style.width = width + 'px';
+		player.style.height = pHeight + 'px';
+		player.style.left = 0;
+		player.style.top = (height - pHeight) / 2 + 'px';
+	}		
+}
+
+
+
+
+},{}],3:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -746,7 +822,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (process){
 // vim:ts=4:sts=4:sw=4:
 /*!
@@ -2798,7 +2874,7 @@ return Q;
 });
 
 }).call(this,require('_process'))
-},{"_process":2}],4:[function(require,module,exports){
+},{"_process":3}],5:[function(require,module,exports){
 //--------------------------------------------
 //
 // Finds closest video size to display
@@ -2829,7 +2905,7 @@ var FindClosest = function(self){
 
 module.exports = FindClosest;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 //--------------------------------------------
 //
 // Adds all needed event listeners
@@ -2894,7 +2970,7 @@ var Listeners = {
 }
 
 module.exports = Listeners;
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 //--------------------------------------------
 //
 // Overwrite Defaults
@@ -3027,7 +3103,7 @@ var OverwriteDefaults = function(self){
 module.exports = OverwriteDefaults;
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 //--------------------------------------------
 //
 // Requirements
@@ -3068,7 +3144,7 @@ var Requirements = function(self){
 }
 
 module.exports = Requirements;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 //--------------------------------------------
 //
 // Setup DOM
@@ -3162,77 +3238,5 @@ var SetupDOM = function(self){
 module.exports = SetupDOM;
 
 
-
-},{}],9:[function(require,module,exports){
-//--------------------------------------------
-//
-// Stretch vids to fill screen
-//
-//--------------------------------------------
-'use strict';
-
-
-var Stretcher = function(player, ratio, parent){
-
-	var poster = parent.getElementsByClassName('laser-poster-wrap')[0];
-	var container = parent || window;
-	var width = container.innerWidth;
-	var height = container.innerHeight;
-
-	if (!width){
-		width = container.clientWidth;
-	}
-
-	if (!height){
-		height = container.clientHeight;
-	}
-
-	var pWidth = container.innerWidth;
-	var pHeight = pWidth / ratio;
-
-	// ------------------------------------------------
-	// Gap underneath
-	//
-	if (width / ratio < height){
-		pWidth = Math.ceil(height * ratio);
-
-		player.style.position = 'absolute';
-		player.style.width = pWidth + 'px';
-		player.style.height = height + 'px';
-		player.style.top = 0;
-		player.style.left = (width - pWidth) / 2 + 'px';
-
-		poster.style.position = 'absolute';
-		poster.style.width = pWidth + 'px';
-		poster.style.height = height + 'px';
-		poster.style.top = 0;
-		poster.style.left = (width - pWidth) / 2 + 'px';
-
-	}
-
-	// ------------------------------------------------
-	// Gap on side
-	//
-	
-	else {
-		pHeight = Math.ceil(width / ratio);
-
-		player.style.position = 'absolute';
-		player.style.width = width + 'px';
-		player.style.height = pHeight + 'px';
-		player.style.left = 0;
-		player.style.top = (height - pHeight) / 2 + 'px';
-
-		poster.style.position = 'absolute';
-		poster.style.width = width + 'px';
-		poster.style.height = pHeight + 'px';
-		poster.style.left = 0;
-		poster.style.top = (height - pHeight) / 2 + 'px';
-	}
-
-
-};
-
-module.exports = Stretcher;
 
 },{}]},{},[1]);

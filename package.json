@@ -23,9 +23,12 @@
   "keywords": [
     "video",
     "html5 video",
-    "fullscreen"
+    "fullscreen",
+    "youtube",
+    "vimeo"
   ],
   "dependencies": {
+    "laserdisc-fullscreen": "0.0.2-alpha1",
     "q": "^1.4.1"
   }
 }
