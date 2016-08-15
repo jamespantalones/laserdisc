@@ -1,4 +1,4 @@
-![laserdisc logo](https://github.com/edweena/laserdisc/__laserdisc.gif)
+![laserdisc logo](https://raw.githubusercontent.com/edweena/laserdisc/master/___laserdisc.gif)
 
 # LASERDISC
 ## HTML5 Video Wrapper

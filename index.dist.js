@@ -85,6 +85,9 @@ var LaserDisc = function(el, opts) {
 	this.duration = 0;
 	this.currentTime = 0;
 
+
+	this.reverseInterval = 10;
+
 	
 
 	//--------------------------------------------
@@ -158,6 +161,7 @@ LaserDisc.prototype = {
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 		this.onClick = this.onClick.bind(this);
 		this.onLoad = this.onLoad.bind(this);
+		this.onLoadedMetaData = this.onLoadedMetaData.bind(this);
 	},
 
 
@@ -197,8 +201,16 @@ LaserDisc.prototype = {
 	//--------------------------------------------
 	// Trigger play
 	//	
-	play: function(){
-		this.video.play();
+	play: function(timeInSeconds){
+		var self = this;
+
+		if (timeInSeconds){
+			this.seekTo(timeInSeconds);
+		}
+		setTimeout(function(){
+			self.video.play();
+		},10);
+		
 	},
 
 
@@ -206,7 +218,11 @@ LaserDisc.prototype = {
 	// Trigger pause
 	//
 	pause: function(){
-		this.video.pause();
+		var self = this;
+
+		setTimeout(function(){
+			self.video.pause();
+		},10);
 	},
 
 
@@ -249,6 +265,53 @@ LaserDisc.prototype = {
 	load: function(){
 		this.video.load();
 	},
+
+	//--------------------------------------------
+	// Seek To
+	//
+	seekTo: function(time){
+		console.log(this);
+		this.video.currentTime = time;
+		this.currentTime = this.video.currentTime;
+	},
+
+	reverse: function(time){
+		var self = this;
+		if (!time){
+			console.warn('Starting point in seconds to reverse from must be specified');
+			return null;
+		}
+
+
+		this.video.currentTime = time;
+		this.currentTime = this.video.currentTime;
+		
+			this.video.play().then(function(){
+				self.video.pause();
+			});
+			
+
+		function reverseFrame(){
+
+			if (self.video.currentTime <= 0){
+				clearTimeout(self.reverseIntervalLoop);
+			}
+
+			else{
+				self.video.currentTime = self.video.currentTime - 0.01;
+				self.currentTime = self.video.currentTime;
+				self.reverseIntervalLoop = setTimeout(reverseFrame, self.reverseInterval);
+
+			}
+			
+
+		}
+
+		reverseFrame();
+
+		
+	},
+			
 			
 
 
@@ -265,6 +328,10 @@ LaserDisc.prototype = {
 	//
 	onDurationChange: function(ev){
 		this.duration = ev.timeStamp;
+
+		if (this.onDurationChangeCallback){
+			this.onDurationChangeCallback(ev);
+		}
 	},
 
 
@@ -297,6 +364,13 @@ LaserDisc.prototype = {
 			this.video.play();
 		}
 
+	},
+
+	onLoadedMetaData: function(ev){
+		
+		if (this.onLoadedMetaDataCallback){
+			this.onLoadedMetaDataCallback(ev);
+		}
 	},
 
 
@@ -379,12 +453,26 @@ LaserDisc.prototype = {
 	// Click on video
 	//
 	onClick: function(ev){
-		if (this.playing){
-			this.pause();
+
+		if (this.clickToPlay){
+			if (this.playing){
+				this.pause();
+			}
+			else{
+				this.play();
+			}
+
+			if (this.onClickCallback){
+				this.onClickCallback(ev);
+			}
 		}
+
 		else{
-			this.play();
+			if (this.onClickCallback){
+				this.onClickCallback(ev);
+			}
 		}
+		
 	},
 
 
@@ -489,16 +577,15 @@ var Listeners = {
 		self.video.addEventListener('pause', self.onPause, false);
 		self.video.addEventListener('timeupdate', self.onTimeUpdate, false);
 		self.video.addEventListener('loadeddata', self.onLoad, false);
-
+		self.video.addEventListener('loadedmetadata', self.onLoadedMetaData, false);
+		self.video.addEventListener('click', self.onClick, false);
 
 		if (self.hoverToPlay){
 			self.video.addEventListener('mouseenter', self.onMouseEnter, false);
 			self.video.addEventListener('mouseleave', self.onMouseLeave, false);
 		}
 
-		if (self.clickToPlay){
-			self.video.addEventListener('click', self.onClick, false);
-		}
+			
 
 	},
 
@@ -515,16 +602,14 @@ var Listeners = {
 		self.video.removeEventListener('pause', self.onPause, false);
 		self.video.removeEventListener('timeupdate', self.onTimeUpdate, false);
 		self.video.removeEventListener('loadeddata', self.onLoad, false);
-
+		self.video.removeEventListener('loadedmetadata', self.onLoadedMetaData, false);
+		self.video.removeEventListener('click', self.onClick, false);
+		
 		if (self.hoverToPlay){
 			self.video.removeEventListener('mouseenter', self.onMouseEnter, false);
 			self.video.removeEventListener('mouseleave', self.onMouseLeave, false);
 		}
 		
-
-		if (self.clickToPlay){
-			self.video.removeEventListener('click', self.onClick, false);
-		}
 	}
 
 }
@@ -621,6 +706,18 @@ var OverwriteDefaults = function(self){
 
 	if (typeof self.opts.onTimeUpdate === 'function'){
 		self.onTimeUpdateCallback = self.opts.onTimeUpdate;
+	}
+
+	if (typeof self.opts.onClick === 'function'){
+		self.onClickCallback = self.opts.onClick;
+	}
+
+	if (typeof self.opts.onDurationChange === 'function'){
+		self.onDurationChangeCallback = self.opts.onDurationChange;
+	}
+
+	if (typeof self.opts.onLoadedMetaData === 'function'){
+		self.onLoadedMetaDataCallback = self.opts.onLoadedMetaData;
 	}
 
 	//--------------------------------------------
