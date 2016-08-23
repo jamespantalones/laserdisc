@@ -3001,8 +3001,8 @@ var OverwriteDefaults = function(self){
 
 	//--------------------------------------------
 	// Check for mute
-	if (self.opts.mute !== null && self.opts.mute !== 'undefined'){
-		self.mute = self.opts.mute;
+	if (self.opts.muted !== null && self.opts.muted !== 'undefined'){
+		self.muted = self.opts.muted;
 	}
 
 	//--------------------------------------------

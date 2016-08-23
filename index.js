@@ -293,14 +293,16 @@ LaserDisc.prototype = {
 	// Trigger mute
 	//
 	mute: function(){
-		this.video.mute();
+		this.video.muted = true;
+		this.muted = true;
 	},
 
 	//--------------------------------------------
 	// Trigger sound
 	//
 	unmute: function(){
-		this.video.unmute();
+		this.video.muted = false;
+		this.muted = false;
 	},
 
 
