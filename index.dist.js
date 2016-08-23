@@ -145,7 +145,7 @@ LaserDisc.prototype = {
 		// If stretch option is on, instantiate the Stretcher
 		//
 		if (this.stretch){
-			FullScreen(this.video);
+			FullScreen(this.video, this.ratio, this.outerWrap);
 		}
 	},
 
@@ -576,7 +576,7 @@ LaserDisc.prototype = {
 
 
 		if (this.stretch){
-			FullScreen(this.video);
+			FullScreen(this.video,this.ratio, this.outerWrap);
 		}
 	}
 }

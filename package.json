@@ -28,7 +28,7 @@
     "vimeo"
   ],
   "dependencies": {
-    "laserdisc-fullscreen": "0.0.2-alpha1",
+    "laserdisc-fullscreen": "0.0.2",
     "q": "^1.4.1"
   }
 }
