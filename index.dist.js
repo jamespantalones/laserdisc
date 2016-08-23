@@ -75,7 +75,7 @@ var LaserDisc = function(el, opts) {
 	this.showPlayButton = true;
 
 	//mute audio
-	this.mute = true;
+	this.muted = true;
 
 
 	//default volume
