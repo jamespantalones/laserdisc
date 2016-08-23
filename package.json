@@ -1,6 +1,6 @@
 {
   "name": "laserdisc",
-  "version": "0.0.83",
+  "version": "0.0.84",
   "description": "Cool HTML5 Video wrapper with features like fullscreen stretch + crop",
   "main": "index.js",
   "scripts": {
