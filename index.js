@@ -575,7 +575,7 @@ LaserDisc.prototype = {
 
 
 		if (this.stretch){
-			FullScreen(this.video, this.outerWrap, this.ratio, );
+			FullScreen(this.video, this.outerWrap, this.ratio);
 		}
 	}
 }
