@@ -384,7 +384,7 @@ LaserDisc.prototype = {
 	// source changes
 	//
 	onDurationChange: function(ev){
-		this.duration = ev.timeStamp;
+		this.duration = this.video.duration;
 
 		if (this.onDurationChangeCallback){
 			this.onDurationChangeCallback(ev);
@@ -438,6 +438,12 @@ LaserDisc.prototype = {
 	//
 	onCanPlayThrough: function(){
 		this.canplaythrough = true;
+
+		//--------------------------------------------
+		// Make sure duration is still correct
+		//
+				
+		this.duration = this.video.duration;
 
 		if (this.onCanPlayThroughCallback){
 			this.onCanPlayThroughCallback();
