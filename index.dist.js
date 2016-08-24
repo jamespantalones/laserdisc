@@ -396,11 +396,11 @@ LaserDisc.prototype = {
 	// When video has loaded enough frames to begin playing
 	//
 			
-	onCanPlay: function(){
+	onCanPlay: function(ev){
 		this.canplay = true;
 
 		if (this.onCanPlayCallback){
-			this.onCanPlayCallback();
+			this.onCanPlayCallback(ev);
 		}
 	},
 
@@ -3068,6 +3068,10 @@ var OverwriteDefaults = function(self){
 		self.onLoadedMetaDataCallback = self.opts.onLoadedMetaData;
 	}
 
+	if (typeof self.opts.onCanPlay === 'function'){
+		self.onCanPlayCallback = self.opts.onCanPlay;
+	}
+
 	if (typeof self.opts.onCanPlayThrough === 'function'){
 		self.onCanPlayThroughCallback = self.opts.onCanPlayThrough;
 	}
@@ -3215,6 +3219,12 @@ var SetupDOM = function(self){
 	self.video = video;
 	self.mp4Source = mp4Source;
 	self.webmSource = webmSource;
+
+	//--------------------------------------------
+	// Set initial volume
+	//
+			
+	self.video.volume = self.volume || 1.0;
 	
 
 	if (self.autoplay){
