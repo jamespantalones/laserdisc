@@ -75,6 +75,12 @@ var SetupDOM = function(self){
 	self.video = video;
 	self.mp4Source = mp4Source;
 	self.webmSource = webmSource;
+
+	//--------------------------------------------
+	// Set initial volume
+	//
+			
+	self.video.volume = self.volume || 1.0;
 	
 
 	if (self.autoplay){

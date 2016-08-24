@@ -50,7 +50,7 @@ video/
 
 HTML
 ```html
-<div class="someclassname"
+<div class="someclassname" id="someid"
   data-source="data/your_video_with_no_file_extension"
   data-poster="data/yourposter.jpg"
 ></div>
@@ -64,16 +64,26 @@ JS
 import LaserDisc from 'laserdisc';
 
 //grab all the vids to turn into laserdiscs
-const lasers = document.getElementsByClassName('someclassname');
+const laserTarget = document.getElementById("someid")
 
-//render each one
-for (let i = 0; i < lasers.length; i++ ){
+//render
+const options = {};
+const item = new LaserDisc(lasersTarget, options);
+```
 
-  const options = {};
+### Styling + DOM
 
-  const item = new LaserDisc(lasers[i], options);
-  
-}
+LASERDISC exposes several classes to use and style at will. By default, all videos will be responsive.
+
+**Note**: Laserdisc will *replace* the provided DOM node with the following DOM structure
+
+```css
+
+.laser-outer-wrap
+  .laser-inner-wrap
+    .laser-poster-wrap
+    .laser-video
+
 ```
 
 
@@ -100,7 +110,7 @@ const options = {
   controls: false,
   
   //default true
-  mute: true,
+  muted: true,
   
   //default false
   autoplay: false,
@@ -187,7 +197,7 @@ item.mute();
 item.unmute();
 
 //float between 0.0 (muted) and 1.0 (full volume)
-item.volume(level);
+item.setVolume(level);
 
 //jump to point
 item.seekTo(timeInSeconds);
@@ -224,18 +234,7 @@ item.volume;
 ```
 
 
-### Styling
 
-LASERDISC exposes several classes to use and style at will. By default, all videos will be responsive.
-
-```css
-
-.laser-outer-wrap
-	.laser-inner-wrap
-		.laser-poster-wrap
-		.laser-video
-
-```
 
 
 *Cool logo by Stephanie Davidson*

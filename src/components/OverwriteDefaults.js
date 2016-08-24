@@ -102,6 +102,10 @@ var OverwriteDefaults = function(self){
 		self.onLoadedMetaDataCallback = self.opts.onLoadedMetaData;
 	}
 
+	if (typeof self.opts.onCanPlay === 'function'){
+		self.onCanPlayCallback = self.opts.onCanPlay;
+	}
+
 	if (typeof self.opts.onCanPlayThrough === 'function'){
 		self.onCanPlayThroughCallback = self.opts.onCanPlayThrough;
 	}

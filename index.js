@@ -395,11 +395,11 @@ LaserDisc.prototype = {
 	// When video has loaded enough frames to begin playing
 	//
 			
-	onCanPlay: function(){
+	onCanPlay: function(ev){
 		this.canplay = true;
 
 		if (this.onCanPlayCallback){
-			this.onCanPlayCallback();
+			this.onCanPlayCallback(ev);
 		}
 	},
 
