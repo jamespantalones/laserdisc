@@ -148,7 +148,7 @@ const options = {
   onPause: function(ev){
   },
   
-  //end is over
+  //end is over (please note: this event will only fire if 'loop' option is set to FALSE)
   onEnd: function(ev){
   },
   
