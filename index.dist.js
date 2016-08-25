@@ -510,7 +510,7 @@ LaserDisc.prototype = {
 	// Current playback position
 	//
 	onTimeUpdate: function(ev){
-		this.currentTime = ev.timeStamp;
+		this.currentTime = this.video.currentTime;
 
 		if (this.onTimeUpdateCallback){
 			this.onTimeUpdateCallback(this.currentTime);

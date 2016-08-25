@@ -454,13 +454,16 @@ LaserDisc.prototype = {
 	// Video is over
 	//		
 	onEnd: function(ev){
-		if (this.video.loop){
-			this.video.play();
-		}
 
 		if (this.onEndCallback){
 			this.onEndCallback(ev);
 		}
+		
+		if (this.video.loop){
+			this.video.play();
+		}
+
+		
 	},
 
 
