@@ -9,8 +9,6 @@
 
 var OverwriteDefaults = function(self){
 
-	console.log(self.opts)
-
 	self.fullScreen = self.opts.fullScreen || false;
 	self.controls = self.opts.controls || false;
 	self.stretch = self.opts.stretch || false;
