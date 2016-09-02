@@ -83,7 +83,7 @@ var SetupDOM = function(self){
 	self.video.volume = self.volume || 1.0;
 	
 
-	if (self.autoplay){
+	if (self.autoplay === true){
 		self.video.setAttribute('autoplay', '');
 	}
 

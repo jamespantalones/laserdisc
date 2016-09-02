@@ -61,6 +61,8 @@ var LaserDisc = function(el, opts) {
 	//show controls
 	this.controls = false;
 
+	this.autoplay = true;
+
 
 	//play video on click
 	this.clickToPlay = true;

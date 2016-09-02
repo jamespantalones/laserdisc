@@ -62,8 +62,6 @@ var LaserDisc = function(el, opts) {
 	//show controls
 	this.controls = false;
 
-	//play video automatically
-	this.autoplay = true;
 
 	//play video on click
 	this.clickToPlay = true;
@@ -2987,7 +2985,7 @@ var OverwriteDefaults = function(self){
 
 	self.fullScreen = self.opts.fullScreen || false;
 	self.controls = self.opts.controls || false;
-	self.autoplay = self.opts.autoplay || false;
+	self.autoplay = self.opts.autoplay || true;
 	self.stretch = self.opts.stretch || false;
 	self.showPlayButton = self.opts.showPlayButton || false;
 
