@@ -23,6 +23,7 @@ var Requirements = function(self){
 		return null;
 	}
 
+
 	//--------------------------------------------
 	// Make sure users don't enable click and hover
 	//

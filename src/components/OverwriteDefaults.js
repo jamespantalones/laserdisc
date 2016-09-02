@@ -9,11 +9,16 @@
 
 var OverwriteDefaults = function(self){
 
+	console.log(self.opts)
+
 	self.fullScreen = self.opts.fullScreen || false;
 	self.controls = self.opts.controls || false;
-	self.autoplay = self.opts.autoplay || true;
 	self.stretch = self.opts.stretch || false;
 	self.showPlayButton = self.opts.showPlayButton || false;
+
+	if (self.opts && self.opts.autoplay){
+		self.autoplay = self.opts.autoplay;
+	}
 
 	//--------------------------------------------
 	// Check for sizes

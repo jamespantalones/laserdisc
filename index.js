@@ -61,6 +61,7 @@ var LaserDisc = function(el, opts) {
 	//show controls
 	this.controls = false;
 
+	//autoplay default
 	this.autoplay = true;
 
 
@@ -416,7 +417,7 @@ LaserDisc.prototype = {
 			this.onLoadCallback(ev);
 		}
 
-		if (this.autoplay){
+		if (this.autoplay === true){
 			this.video.play();
 		}
 

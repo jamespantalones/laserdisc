@@ -87,7 +87,7 @@ var SetupDOM = function(self){
 		self.video.setAttribute('autoplay', '');
 	}
 
-	if (self.loop){
+	if (self.loop === true){
 		self.video.setAttribute('loop', '');
 	}
 
