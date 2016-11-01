@@ -7,7 +7,7 @@
 
 const LaserDisc = require('../../index')
 const expect = require('chai').expect
-const generate = require('./generateDOM')
+const generate = require('./generate')
 
 const POSTER = 'http://animals.sandiegozoo.org/sites/default/files/juicebox_slides/caiman_lizard.jpg'
 const SRC = 'test'

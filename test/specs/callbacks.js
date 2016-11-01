@@ -7,10 +7,15 @@
 
 const LaserDisc = require('../../index')
 const expect = require('chai').expect
-const generate = require('./generateDOM')
+const generate = require('./generate')
 
 module.exports = describe('Callbacks', function(){
 
+
+	//--------------------------------------------
+	// On Play
+	//
+			
 	it('if onPlay is passed in, it should trigger on video play', function(done){
 
 		const target = generate()
@@ -19,6 +24,7 @@ module.exports = describe('Callbacks', function(){
 		}}
 
 		const l = new LaserDisc(target, options)
+		
 		setTimeout(function(){
 			l.video.play()
 			l.destroy()
@@ -27,6 +33,10 @@ module.exports = describe('Callbacks', function(){
 	})
 
 
+	//--------------------------------------------
+	// On Pause
+	//
+			
 	it('if onPause is passed in, it should trigger on video pause', function(done){
 		const target = generate()
 		const options = {autoplay: false, controls: false, onPause: function(){
@@ -47,7 +57,9 @@ module.exports = describe('Callbacks', function(){
 		},100)
 	})
 
-	//self.video.removeEventListener('loadeddata', self.onLoad, false);
+	//--------------------------------------------
+	// On Load
+	//	
 	it('if onLoad is passed in, it should trigger on video load', function(done){
 		const target = generate()
 		const options = {autoplay: false, onLoad: function(){
@@ -59,6 +71,11 @@ module.exports = describe('Callbacks', function(){
 		const l = new LaserDisc(target, options)
 	})
 
+
+	//--------------------------------------------
+	// On Can Play
+	//
+			
 	it('if onCanPlay callback is passed in, it should trigger when video is ready', function(done){
 		const target = generate()
 		const options = {autoplay: false, onCanPlay: function(){
@@ -70,6 +87,10 @@ module.exports = describe('Callbacks', function(){
 		const l = new LaserDisc(target, options)
 	})
 
+	//--------------------------------------------
+	// On Can Play Through
+	//
+			
 	it('if onCanPlayThrough callback is passed in, it should trigger when video is ready', function(done){
 		const target = generate()
 		const options = {autoplay: false, onCanPlayThrough: function(){
@@ -81,6 +102,10 @@ module.exports = describe('Callbacks', function(){
 		const l = new LaserDisc(target, options)
 	}).timeout(5000)
 
+
+	//--------------------------------------------
+	// On Time update
+	//
 	it('if onTimeUpdate is passed in, it should update every so often', function(done){
 		let time = 0
 		const target = generate()
@@ -92,4 +117,22 @@ module.exports = describe('Callbacks', function(){
 
 		const l = new LaserDisc(target, options)
 	})
+
+	//--------------------------------------------
+	// On End
+	//
+	it('if onEnd callback is passed in, it should update when video is over', function(done){
+
+		const target = generate()
+		const options = {autoplay: true, loop: false, onEnd: function(){
+			done()
+		}}
+
+		const l = new LaserDisc(target, options)
+
+	}).timeout(12000)
+
+
+			
+			
 })
