@@ -3,8 +3,8 @@
 // Main export
 //
 //--------------------------------------------
-var q = require('q');
-var FullScreen = require('laserdisc-fullscreen');
+var q = require('q')
+var FullScreen = require('laserdisc-fullscreen')
 
 //--------------------------------------------
 //
@@ -28,20 +28,20 @@ var LaserDisc = function(el, opts) {
 	//--------------------------------------------
 	// Element to replace with Laserdisc
 	//
-	this.el = el || null;
+	this.el = el || null
 
 
 	//--------------------------------------------
 	// Window sizing
 	//
-	this.winWidth = window.innerWidth;
-	this.winHeight = window.innerHeight;
+	this.winWidth = window.innerWidth
+	this.winHeight = window.innerHeight
 			
 	//--------------------------------------------
 	// Required Data
 	//
-	this.source = '';
-	this.poster = '';
+	this.source = ''
+	this.poster = ''
 	
 	//--------------------------------------------
 	// Defaults
@@ -50,36 +50,38 @@ var LaserDisc = function(el, opts) {
 	this.sizes = [];
 
 	//stretch + crop to fill container at all times
-	this.stretch = false;
+	this.stretch = false
 
 	//default video screen ratio
-	this.ratio = 16 / 9;
+	this.ratio = 16 / 9
 
 	//loop
-	this.loop = true;
+	this.loop = true
 
 	//show controls
-	this.controls = false;
+	this.controls = false
 
 	//autoplay default
-	this.autoplay = true;
+	this.autoplay = true
 
 
 	//play video on click
-	this.clickToPlay = true;
+	this.clickToPlay = false
 
 	//play video on hover
-	this.hoverToPlay = false;
+	this.hoverToPlay = false
 
 	//show play button
-	this.showPlayButton = true;
+	this.showPlayButton = false
 
 	//mute audio
-	this.muted = true;
+	this.muted = true
 
 
 	//default volume
-	this.volume = 1.0;
+	this.volume = 1.0
+
+
 
 
 	//--------------------------------------------
@@ -109,6 +111,8 @@ var LaserDisc = function(el, opts) {
 	//	
 	this.opts = opts || null;
 
+
+
 	this.init();
 };
 
@@ -122,8 +126,11 @@ LaserDisc.prototype = {
 			
 	init: function(){
 
+
+
 		//make sure correct inputs are passed in
 		CheckRequirements(this);
+
 		
 		//call overwrite module if options are passed in
 		if (this.opts){
@@ -166,7 +173,6 @@ LaserDisc.prototype = {
 		this.onMouseLeave = this.onMouseLeave.bind(this);
 		this.onClick = this.onClick.bind(this);
 		this.onLoad = this.onLoad.bind(this);
-		this.onLoadedMetaData = this.onLoadedMetaData.bind(this);
 	},
 
 
@@ -175,24 +181,27 @@ LaserDisc.prototype = {
 	//
 			
 	doesVideoExist: function(url){
-		var deferred = q.defer();
-		var request = new XMLHttpRequest();
+
+		var deferred = q.defer()
+		
+		var request = new XMLHttpRequest()
 
 		
-		request.open('GET', url, true);
+		request.open('GET', url, true)
 
 		request.onload = function(){
 			deferred.resolve(request.status);
 		}
 
 		request.onerror = function(err){
-			deferred.reject(err);
+			console.log('ERROR FETCHING', err)
+			deferred.reject(err)
 		}
 
 		
-		request.send();
+		request.send()
 
-		return deferred.promise;
+		return deferred.promise
 
 	},
 
@@ -205,8 +214,9 @@ LaserDisc.prototype = {
 		var mp4Source = '';
 		var webmSource = '';
 
+		
 
-		if (!this.sizes || this.sizes.length > 0){
+		if (this.sizes.length > 0){
 			// Pick closest size
 			var closest = FindClosest(this);
 
@@ -222,6 +232,8 @@ LaserDisc.prototype = {
 			mp4Source = this.source + '.mp4';
 
 		}
+
+		
 
 
 		this.doesVideoExist(webmSource).then(function(firstResponse){
@@ -423,27 +435,18 @@ LaserDisc.prototype = {
 
 	},
 
-	onLoadedMetaData: function(ev){
-		
-		this.loadedMetaData = true;
-
-		if (this.onLoadedMetaDataCallback){
-			this.onLoadedMetaDataCallback(ev);
-		}
-	},
-
 
 	//--------------------------------------------
 	// When video can fully play through
 	//
 	onCanPlayThrough: function(){
-		this.canplaythrough = true;
+		this.canplaythrough = true
 
 		//--------------------------------------------
 		// Make sure duration is still correct
 		//
 				
-		this.duration = this.video.duration;
+		this.duration = this.video.duration
 
 		if (this.onCanPlayThroughCallback){
 			this.onCanPlayThroughCallback();

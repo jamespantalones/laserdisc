@@ -3,14 +3,17 @@
 // Tests
 //
 //--------------------------------------------
-'use strict';
+'use strict'
+
+const LaserDisc = require('../index')
+const expect = require('chai').expect
 
 
-var chai = require('chai');
-var assert = chai.assert;
-var path = require('path');
 
+describe('Tests', function(){
 
-var Laserdisc = require('../index');
-
-
+	require('./specs/init')
+	require('./specs/defaults')
+	require('./specs/overwrite')
+	require('./specs/callbacks')
+})

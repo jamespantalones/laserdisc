@@ -9,24 +9,33 @@
 
 var OverwriteDefaults = function(self){
 
-	self.fullScreen = self.opts.fullScreen || false;
-	self.controls = self.opts.controls || false;
-	self.stretch = self.opts.stretch || false;
-	self.showPlayButton = self.opts.showPlayButton || false;
+	//--------------------------------------------
+	// Required opts /defaults
+	//
+			
+	self.fullScreen = self.opts.fullScreen || false
+	self.controls = self.opts.controls || false
+	self.stretch = self.opts.stretch || false
+	self.showPlayButton = self.opts.showPlayButton || false
 
-	if (self.opts && self.opts.autoplay){
-		self.autoplay = self.opts.autoplay;
+	if (!self.opts){
+		return null
+	}
+
+	if (self.opts.hasOwnProperty('autoplay')){
+		self.autoplay = self.opts.autoplay
+		self.clickToPlay = false
+		self.hoverToPlay = false
 	}
 
 	//--------------------------------------------
 	// Check for sizes
 	//
-	if (self.opts.sizes){
-
+	if (self.opts.hasOwnProperty('sizes')){
 		//Make sure we have number and not string
 		for (var i = 0; i < self.opts.sizes.length; i++ ){
-			var num = parseInt(self.opts.sizes[i], 10);
-			self.sizes.push(num);
+			var num = parseInt(self.opts.sizes[i], 10)
+			self.sizes.push(num)
 		}
 	}
 			
@@ -34,95 +43,94 @@ var OverwriteDefaults = function(self){
 	//--------------------------------------------
 	// Check for loop
 	//		
-	if (self.opts.loop !== null && self.opts.loop !== 'undefined'){
-		self.loop = self.opts.loop;
+	if (self.opts.hasOwnProperty('loop')){
+		self.loop = self.opts.loop
 	}
 
 	//--------------------------------------------
 	// Check for mute
-	if (self.opts.muted !== null && self.opts.muted !== 'undefined'){
-		self.muted = self.opts.muted;
+	if (self.opts.hasOwnProperty('muted')){
+		self.muted = self.opts.muted
 	}
 
 	//--------------------------------------------
 	// Check for click to play
 	//
-	if (self.opts.clickToPlay !== null && self.opts.clickToPlay !== 'undefined'){
-		self.clickToPlay = self.opts.clickToPlay;
+	if (self.opts.hasOwnProperty('clickToPlay')){
+		self.clickToPlay = self.opts.clickToPlay
+		self.autoplay = false
+		self.clickToPlay = false
 	}
 	
 
 	//--------------------------------------------
 	// Check for play on hover
 	//
-	if (self.opts.hoverToPlay !== null && self.opts.hoverToPlay !== 'undefined'){
+	if (self.opts.hasOwnProperty('hoverToPlay')){
 		self.hoverToPlay = self.opts.hoverToPlay;
 	}
 
 	//--------------------------------------------
 	// Controls
 	//
-	if (self.opts.controls !== null && self.opts.controls !== 'undefined'){
+	if (self.opts.hasOwnProperty('controls')){
 		self.controls = self.opts.controls;
 	}
 
 	//--------------------------------------------
 	// Setup optional callbacks
 	//
-	if (typeof self.opts.onPlay === 'function'){
+	if (self.opts.hasOwnProperty('onPlay') && typeof self.opts.onPlay === 'function'){
 		self.onPlayCallback = self.opts.onPlay;
 	}
 
-	if (typeof self.opts.onPause === 'function'){
+	if (self.opts.hasOwnProperty('onPause') && typeof self.opts.onPause === 'function'){
 		self.onPauseCallback = self.opts.onPause;
 	}
 
-	if (typeof self.opts.onLoad === 'function'){
+	if (self.opts.hasOwnProperty('onLoad') && typeof self.opts.onLoad === 'function'){
 		self.onLoadCallback = self.opts.onLoad;
 	}
 
-	if (typeof self.opts.onError === 'function'){
+	if (self.opts.hasOwnProperty('onError') && typeof self.opts.onError === 'function'){
 		self.onErrorCallback = self.opts.onError;
 	}
 
-	if (typeof self.opts.onEnd === 'function'){
+	if (self.opts.hasOwnProperty('onEnd') && typeof self.opts.onEnd === 'function'){
 		self.onEndCallback = self.opts.onEnd;
 	}
 
-	if (typeof self.opts.onTimeUpdate === 'function'){
+	if (self.opts.hasOwnProperty('onTimeUpdate') && typeof self.opts.onTimeUpdate === 'function'){
 		self.onTimeUpdateCallback = self.opts.onTimeUpdate;
 	}
 
-	if (typeof self.opts.onClick === 'function'){
+	if (self.opts.hasOwnProperty('onClick') && typeof self.opts.onClick === 'function'){
 		self.onClickCallback = self.opts.onClick;
 	}
 
-	if (typeof self.opts.onDurationChange === 'function'){
+	if (self.opts.hasOwnProperty('onDurationChange') && typeof self.opts.onDurationChange === 'function'){
 		self.onDurationChangeCallback = self.opts.onDurationChange;
 	}
 
-	if (typeof self.opts.onLoadedMetaData === 'function'){
-		self.onLoadedMetaDataCallback = self.opts.onLoadedMetaData;
-	}
 
-	if (typeof self.opts.onCanPlay === 'function'){
+	if (self.opts.hasOwnProperty('onCanPlay') && typeof self.opts.onCanPlay === 'function'){
 		self.onCanPlayCallback = self.opts.onCanPlay;
 	}
 
-	if (typeof self.opts.onCanPlayThrough === 'function'){
+	if (self.opts.hasOwnProperty('onCanPlayThrough') && typeof self.opts.onCanPlayThrough === 'function'){
 		self.onCanPlayThroughCallback = self.opts.onCanPlayThrough;
 	}
 
 	//--------------------------------------------
 	// Check ratio overrides
 	//
-	if (self.opts.ratio){
+	if (self.opts.hasOwnProperty('ratio')){
 
 		if (self.opts.ratio === '16:9' || self.opts.ratio === 16 / 9){
 			self.ratio = 16 / 9;
 		}
 
-		else if (self.opts.ratio === '4:3' || opts.ratio === 4 / 3){
+		else if (self.opts.ratio === '4:3' || self.opts.ratio === 4 / 3){
 			self.ratio = 4 / 3;
 		}
 

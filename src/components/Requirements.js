@@ -9,18 +9,19 @@ var Requirements = function(self){
 
 	if (!self.el) {
 		console.warn('No element passed to Laserdisc constructor');
-		return null;
+		throw new Error('No element passed to Laserdisc constructor')
 	}
 
-	self.source = self.el.dataset.source;
-	self.poster = self.el.dataset.poster;
+	self.source = self.el.getAttribute('data-source')
+	self.poster = self.el.getAttribute('data-poster')
+
 
 	//------------------------------------------
 	// Verify
 	//		
 	if (!self.source || !self.poster){
-		console.warn('Missing some required info. Make sure you have MP4, WEBM, and Poster attributes specified');
-		return null;
+		console.warn('Missing some required info. Make sure you have MP4, WEBM, and Poster attributes specified')
+		throw new Error('Missing some required info. Make sure you have MP4, WEBM, and Poster attributes specified')
 	}
 
 
